@@ -25,4 +25,7 @@ func main(){
 	fmt.Println("Server starta t port :9000")
 	Handlefunc()
 }
-// https://itnext.io/encrypt-data-with-a-password-in-go-b5366384e291
+
+// https://www.thepolyglotdeveloper.com/2018/02/encrypt-decrypt-data-golang-application-crypto-packages/
+// scure
+// https://medium.com/@jcox250/password-hash-salt-using-golang-b041dc94cb72
