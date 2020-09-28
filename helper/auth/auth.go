@@ -12,23 +12,8 @@ var cookieHandler = securecookie.New(
     securecookie.GenerateRandomKey(32))
 
 
-func Login(w http.ResponseWriter, r *http.Request){
-	name := r.FormValue("name")
-	pass := r.FormValue("password")
-	redirectTarget := "/"
-	if name != "" && pass != ""{
-		// logic
-		bool := true
-		if bool {
-			SetCookie(name,w)
-			redirectTarget = "/home"
-		} else{
-			redirectTarget = "/"
-		}
-
-	}
-
-	http.Redirect(w,r,redirectTarget,302)
+func SetCookies(username string,w http.ResponseWriter){
+	SetCookie(username,w)
 }
 
 func Redirect(w http.ResponseWriter,r *http.Request){
@@ -75,7 +60,6 @@ func GetUserName(request *http.Request) (userName string) {
          Name:   "session",
          Value:  "",
          Path:   "/",
-         MaxAge: -1,
      }
      http.SetCookie(response, cookie)
  }

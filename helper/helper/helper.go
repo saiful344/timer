@@ -1,5 +1,4 @@
-package main
-
+package helper
 
 import (
 	"crypto/aes"
@@ -52,17 +51,17 @@ func Decrypt(data []byte, passphrase string) []byte{
 	}
 	return plaintext
 }
-func main() {
+// func main() {
 
-	for{
-		pwd := getPwd()
-		hash := hashAndSalt(pwd)
+// 	for{
+// 		pwd := getPwd()
+// 		hash := hashAndSalt(pwd)
 
-		pwd2 := getPwd();
-		pwdMatch:=  comparePasswords(hash, pwd2)
+// 		pwd2 := getPwd();
+// 		pwdMatch:=  comparePasswords(hash, pwd2)
 
-		fmt.Println("password mastch?",pwdMatch)
-	}
+// 		fmt.Println("password mastch?",pwdMatch)
+// 	}
 
 	// testing one
 	// fmt.Println("Starting the application...")
@@ -70,7 +69,7 @@ func main() {
 	// fmt.Printf("Encrypted: %x\n", ciphertext)
 	// plaintext := Decrypt(ciphertext, "password")
 	// fmt.Printf("Decrypted: %s\n", plaintext)
-}
+// }
 func getPwd() []byte{
 	fmt.Println("isi oy")
 
@@ -82,7 +81,7 @@ func getPwd() []byte{
 	return []byte(pwd)
 }
 
-func hashAndSalt(pwd []byte) string{
+func HashAndSalt(pwd []byte) string{
 	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
 	if err != nil{
 		log.Println(err)
@@ -91,7 +90,7 @@ func hashAndSalt(pwd []byte) string{
 	return string(hash)
 }
 
-func comparePasswords(hasher string, plainpwd []byte) bool{
+func ComparePasswords(hasher string, plainpwd []byte) bool{
 	byteHash := []byte(hasher)
 	err := bcrypt.CompareHashAndPassword(byteHash, plainpwd)
 	if err != nil {
