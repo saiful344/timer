@@ -7,15 +7,17 @@ import (
 	"log"
 	"github.com/saiful344/timer/helper/auth"
 	"github.com/saiful344/timer/models/login"
+	"github.com/saiful344/timer/models/timer"
 )
 
 func Handlefunc(){
 	r := mux.NewRouter()
 	r.HandleFunc("/",HomePage)
 	// r.HandleFunc("/home",auth.Redirect)
+	r.HandleFunc("/create",timer.Create)
 	r.HandleFunc("/login",login.Login)
 	r.HandleFunc("/sign",login.Sign_up)
-	// r.HandleFunc("/logout",auth.Logout)
+	r.HandleFunc("/logout",auth.Logout)
 	log.Fatal(http.ListenAndServe(":9000",r))
 }
 func HomePage(w http.ResponseWriter, r *http.Request){
