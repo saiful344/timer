@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"github.com/gorilla/mux"
 	"fmt"
+	"time"
 	"log"
 	"github.com/saiful344/timer/helper/auth"
 	"github.com/saiful344/timer/models/login"
@@ -28,7 +29,12 @@ func HomePage(w http.ResponseWriter, r *http.Request){
 
 func main(){
 	fmt.Println("Server starta t port :9000")
-	Handlefunc()
+	// Handlefunc()
+
+	var datetime = time.Now()
+	datetime.Format(time.RFC3339)
+	// time := time.Now()
+	fmt.Println(datetime)
 }
 
 // https://www.thepolyglotdeveloper.com/2018/02/encrypt-decrypt-data-golang-application-crypto-packages/
