@@ -1,33 +1,35 @@
 package main
 
 import (
-	"net/http"
-	"github.com/gorilla/mux"
 	"fmt"
 	"time"
 	"log"
+	"net/http"
+
+	"github.com/gorilla/mux"
 	"github.com/saiful344/timer/helper/auth"
 	"github.com/saiful344/timer/models/login"
 	"github.com/saiful344/timer/models/timer"
 )
 
-func Handlefunc(){
+func Handlefunc() {
 	r := mux.NewRouter()
-	r.HandleFunc("/",HomePage)
+	r.HandleFunc("/", HomePage)
 	// r.HandleFunc("/home",auth.Redirect)
-	r.HandleFunc("/create",timer.Create)
-	r.HandleFunc("/login",login.Login)
-	r.HandleFunc("/sign",login.Sign_up)
-	r.HandleFunc("/logout",auth.Logout)
-	log.Fatal(http.ListenAndServe(":9000",r))
+	r.HandleFunc("/create", timer.Create)
+	r.HandleFunc("/login", login.Login)
+	r.HandleFunc("/sign", login.Sign_up)
+	r.HandleFunc("/logout", auth.Logout)
+	r.HandleFunc("/msg", timer.Create_project)
+	r.HandleFunc("/create_project", timer.Create_project)
+	log.Fatal(http.ListenAndServe(":9000", r))
 }
-func HomePage(w http.ResponseWriter, r *http.Request){
+func HomePage(w http.ResponseWriter, r *http.Request) {
 	userName := auth.GetUserName(r)
 	fmt.Println(userName)
 }
 
-
-func main(){
+func main() {
 	fmt.Println("Server starta t port :9000")
 	// Handlefunc()
 
