@@ -3,6 +3,7 @@ package login
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	// MY Package
@@ -19,6 +20,7 @@ type User struct {
 	gorm.Model
 	Id       int    `json:"id"`
 	Username string `json:"username"`
+	Email string `json:"email"`
 	Password string `json:"password"`
 }
 
@@ -32,7 +34,8 @@ type Message struct {
 }
 
 func dbconn() (db *gorm.DB) {
-	db, err := gorm.Open("mysql", "awc:root@/timer?charset=utf8&parseTime=True&loc=Local")
+	// db, err := gorm.Open("mysql", "awc:root@/timer?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "root:root@/timer?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		panic(err.Error())
 		fmt.Println("can't connect to db")
@@ -46,21 +49,38 @@ func Sign_up(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 	r.ParseForm()
 	// Get value fromuser
-	password := helper.HashAndSalt([]byte(r.FormValue("password")))
-	username := r.FormValue("username")
 	var data User
-	data.Password = password
-	data.Username = username
-	db.NewRecord(data)
-	db.Create(&data)
-	w.WriteHeader(200)
-	output, err := json.Marshal(&Message{Value: "Success Added Data", Status: "200"})
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
+	if len(r.FormValue("email")) != 0 {
+		password := helper.HashAndSalt([]byte(r.FormValue("password")))
+		username := r.FormValue("username")
+		email := r.FormValue("email")
+		data.Password = password
+		data.Username = username
+		data.Email = email
+		fmt.Println("ok")
+	}else{
+		b, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		// Unmarshal
+		fmt.Println(string(b))
+		err = json.Unmarshal(b, &data)
 	}
-	w.Header().Set("content-type", "application/json")
-	w.Write(output)
+	fmt.Println(data.Username)
+	// db.NewRecord(data)
+	// db.Create(&data)
+	// w.WriteHeader(200)
+	// output, err := json.Marshal(&Message{Value: "Success Added Data", Status: "200"})
+	// if err != nil {
+	// 	http.Error(w, err.Error(), 500)
+	// 	return
+	// }
+	// w.Header().Set("content-type", "application/json")
+	// w.Write(output)
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {

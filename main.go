@@ -31,7 +31,7 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	fmt.Println("Server starta t port :9000")
-	// Handlefunc()
+	Handlefunc()
 
 	var datetime = time.Now()
 	datetime.Format(time.RFC3339)

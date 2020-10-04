@@ -57,6 +57,9 @@ func Create(w http.ResponseWriter, r *http.Request) {
 }
 
 func Create_project(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 	db := dbconn()
 	defer db.Close()
 	r.ParseForm()
@@ -68,9 +71,6 @@ func Create_project(w http.ResponseWriter, r *http.Request) {
 	helper.Message_Json("Joss")
 }
 
-func Create_project(w http.ResponseWriter, r *http.Request){
-	
-}
 
 // var datetime = time.Now()
 // datetime.Format(time.RFC3339)

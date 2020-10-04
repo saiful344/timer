@@ -1,6 +1,9 @@
 import React from 'react';
 import './auth.css';
 import './auth.js';
+
+import axios from "axios";
+
 class Login extends React.Component{
 	constructor(props){
 		super(props)
@@ -15,21 +18,14 @@ class Login extends React.Component{
 	  console.log(this.state)
 	};
 
-	onSubmit = () => {
-		axios({
-	    method: 'post',
-	    url: 'myurl',
-	    data: bodyFormData,
-	    headers: {'Content-Type': 'multipart/form-data' }
-	    })
-	    .then(function (response) {
-	        //handle success
-	        console.log(response);
-	    })
-	    .catch(function (response) {
-	        //handle error
-	        console.log(response);
-	    });
+	onSubmit = (e) => {
+		e.preventDefault();
+
+	     axios.post(`http://localhost:9000/sign`, this.state )
+	      .then(res => {
+	        console.log(res);
+	        console.log(res.data);
+	      })
 	}
 
 
@@ -43,7 +39,7 @@ class Login extends React.Component{
 					<input type="text" placeholder="User" className="input" name="username" onChange={this.change}/>
 					<input type="email" placeholder="Email" className="input" name="email"  onChange={this.change}/>
 					<input type="password" placeholder="Password" className="input" name="password"  onChange={this.change}/>
-					<button className="btn">Sign Up</button>
+					<button className="btn" onClick={this.onSubmit} >Sign Up</button>
 				</form>
 			</div>
 
