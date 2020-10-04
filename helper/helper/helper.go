@@ -15,7 +15,8 @@ import (
 )
 
 type Message struct {
-	Msg string `json:'msg'`
+	Msg    string `json:'msg'`
+	Status int    `json:"status"`
 }
 
 func Hashing(key string) string {
@@ -108,10 +109,11 @@ func ComparePasswords(hasher string, plainpwd []byte) bool {
 	return true
 }
 
-func Message_Json(m string) string {
+func Message_Json(m string) []byte {
 	var msg Message
 	msg.Msg = m
+	msg.Status = 200
 	data, _ := json.Marshal(msg)
 	// return
-	return string(data)
+	return data
 }

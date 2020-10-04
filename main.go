@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/saiful344/timer/helper/auth"
@@ -26,7 +26,11 @@ func Handlefunc() {
 }
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	userName := auth.GetUserName(r)
-	fmt.Println(userName)
+	if len(userName) != 0 {
+		fmt.Fprintf(w, userName)
+	} else {
+		fmt.Fprintf(w, "ok")
+	}
 }
 
 func main() {
